@@ -1,0 +1,46 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run start-prod",
+    "build": "babel ./src --out-dir dist",
+    "devenv": "SET NODE_ENV=development",
+    "prodenv": "SET NODE_ENV=production",
+    "devserver": "node -r dotenv/config dist/index.js",
+    "prodserver": "node dist/index.js",
+    "start-prod": "npm-run-all prodenv prodserver",
+    "start-dev": "npm-run-all build devenv devserver",
+    "dev": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "npm-run-all": "^4.1.5",
+    "pg": "^8.3.2",
+    "sequelize": "^6.3.4",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2"
+  },
+  "nodemonConfig": {
+    "exec": "npm run start-dev",
+    "watch": [
+      "src/*"
+    ]
+  }
+}
