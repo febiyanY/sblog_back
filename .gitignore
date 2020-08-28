@@ -2,3 +2,4 @@
 dist
 node_modules
 public/images/avatars/*
+!public/images/avatars/.gitkeep
