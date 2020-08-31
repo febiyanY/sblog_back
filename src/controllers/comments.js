@@ -1,6 +1,5 @@
-import mComment from '../models/comments'
-import mUser from '../models/users'
-import mPost from '../models/posts'
+// import {Comment as mComment, User as mUser} from '../models/index'
+const {Comment : mComment, User : mUser} = require('../models/index')
 
 class Comment {
 
@@ -59,4 +58,5 @@ class Comment {
 
 }
 
-export default new Comment()
+// export default new Comment()
+module.exports =  new Comment()

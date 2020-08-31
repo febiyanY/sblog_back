@@ -1,7 +1,7 @@
-import {Router} from 'express'
-import c_users from '../controllers/users'
-import {adminAuth, clientAuth} from '../middleware/auth'
-import uploadMid from '../middleware/upload'
+const {Router} = require('express') 
+const c_users = require('../controllers/users') 
+const {adminAuth, clientAuth} = require('../middleware/auth') 
+const uploadMid = require('../middleware/upload') 
 
 const upload = uploadMid('avatars', 'single', 'image')
 const router = Router()
@@ -13,4 +13,5 @@ router.delete('/:id', adminAuth, c_users.deleteUser)
 router.get('/:id', clientAuth, c_users.getOneUser)
 router.post('/uploadava', clientAuth, upload, c_users.changeAva)
 
-export default router
+// export default router
+module.exports = router

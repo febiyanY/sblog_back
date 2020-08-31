@@ -6,13 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run start-prod",
-    "build": "babel ./src --out-dir dist",
+    "clean": "rimraf dist",
+    "transpile": "babel ./src --out-dir dist",
+    "build": "npm-run-all clean transpile",
     "devenv": "set NODE_ENV=development",
     "prodenv": "set NODE_ENV=production",
     "devserver": "node -r dotenv/config dist/index.js",
     "prodserver": "node dist/index.js",
     "start-prod": "npm-run-all prodenv prodserver",
     "start-dev": "npm-run-all build devenv devserver",
+    "migrate": "npx sequelize-cli db:migrate",
+    "undo-seed": "npx sequelize-cli db:seed:undo:all",
+    "go-seed": "npx sequelize-cli db:seed:all",
     "dev": "nodemon"
   },
   "author": "",
@@ -27,6 +32,7 @@
     "npm-run-all": "^4.1.5",
     "pg": "^8.3.2",
     "sequelize": "^6.3.4",
+    "sequelize-cli": "^6.2.0",
     "uuid": "^8.3.0"
   },
   "devDependencies": {

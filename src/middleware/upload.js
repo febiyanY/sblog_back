@@ -1,6 +1,6 @@
-import multer from 'multer'
-import path from 'path'
-import {v4 as uuidv4} from 'uuid'
+const multer = require('multer')
+const path = require('path')
+const {v4 : uuidv4} = require('uuid') 
 
 const fileFilter = (req, file, cb) => {
     if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
@@ -49,4 +49,4 @@ const uploadMid = (location, type, name, count=false) => {
 
 }
 
-export default uploadMid
+module.exports = uploadMid

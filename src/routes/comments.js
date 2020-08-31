@@ -1,6 +1,6 @@
-import {Router} from 'express'
-import c_comments from '../controllers/comments'
-import {clientAuth} from '../middleware/auth'
+const {Router} = require('express')
+const c_comments = require('../controllers/comments')
+const {clientAuth} = require('../middleware/auth')
 
 const router = Router()
 
@@ -10,4 +10,5 @@ router.patch('/', clientAuth, c_comments.updateComment)
 router.delete('/:id', clientAuth, c_comments.deleteComment)
 router.get('/:id', clientAuth, c_comments.getOneComment)
 
-export default router
+// export default router
+module.exports = router

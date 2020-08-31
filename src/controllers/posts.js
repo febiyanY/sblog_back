@@ -1,6 +1,6 @@
-import mPost from '../models/posts'
-import mUser from '../models/users'
-import {v4 as uuidv4} from 'uuid'
+// import {Post as mPost, User as mUser} from '../models/index'
+const {Post : mPost, User : mUser} = require('../models/index')
+const {v4 : uuidv4} = require('uuid')
 
 class Post {
 
@@ -75,4 +75,5 @@ class Post {
 
 }
 
-export default new Post()
+// export default new Post()
+module.exports =  new Post()

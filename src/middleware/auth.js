@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
-export const adminAuth = (req, res, next) => {
+const adminAuth = (req, res, next) => {
     try{
         const token = req.header('Authorization').replace('Bearer ','')
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
@@ -18,7 +18,7 @@ export const adminAuth = (req, res, next) => {
         res.status(e.status ? e.status : 500).send(e)
     }
 }
-export const clientAuth = (req, res, next) => {
+const clientAuth = (req, res, next) => {
     try{
         const token = req.header('Authorization').replace('Bearer ','')
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
@@ -33,3 +33,6 @@ export const clientAuth = (req, res, next) => {
     }
 }
 
+module.exports = {
+    adminAuth, clientAuth
+}
