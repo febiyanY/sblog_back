@@ -1,15 +1,13 @@
-import express from 'express'
-import http from 'http'
-import cors from 'cors'
-import path from 'path'
-import * as models from './models'
-import db from './db/db'
+const express = require('express') 
+const http = require('http') 
+const cors = require('cors') 
+const path = require('path') 
 
-import r_users from './routes/users'
-import r_posts from './routes/posts'
-import r_comments from './routes/comments'
+const r_users = require('./routes/users') 
+const r_posts = require('./routes/posts') 
+const r_comments = require('./routes/comments') 
 
-import c_users from './controllers/users'
+const c_users = require('./controllers/users')
 
 const app = express()
 const server = http.createServer(app)
@@ -19,9 +17,6 @@ const publicPath = path.join(__dirname, '../public')
 //     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
-db.sync().then(() => {
-    c_users.initAdmin()
-})
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -37,6 +32,6 @@ app.get('/', (req, res) => res.send({ welcome: 'home' }))
 app.post('/login', c_users.login)
 app.get('/logout', c_users.logout)
 
-export {
+module.exports = {
     app, server
 }

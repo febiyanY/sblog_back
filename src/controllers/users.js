@@ -1,26 +1,12 @@
-import axios from 'axios'
-import mUser from '../models/users'
-import mPost from '../models/posts'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import fs from 'fs'
-import util from 'util'
-import path from 'path'
+// import {User as mUser, Post as mPost} from '../models/index'
+const {User : mUser, Post : mPost} = require('../models/index')
+const bcrypt = require('bcrypt') 
+const jwt = require('jsonwebtoken') 
+const fs = require('fs') 
+const util = require('util') 
+const path = require('path') 
 
 class Users {
-
-    async initAdmin(){
-        try{    
-            await mUser.findOrCreate({where : {type : 'admin'}, defaults : {
-                username : 'blogadmin',
-                password : 'adminpassword',
-                display_name : 'Admin Blog',
-                type : 'admin'
-            }})
-        }catch(e){
-            return e
-        }
-    }
 
     async login(req,res){
         try{
@@ -130,4 +116,5 @@ class Users {
 
 }
 
-export default new Users()
+// export default new Users()
+module.exports =  new Users()
