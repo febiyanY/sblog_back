@@ -30,12 +30,6 @@ module.exports = {
         allowNull: false,
         defaultValue: 'client'
       },
-      token: {
-        type: Sequelize.STRING
-      },
-      token_expire: {
-        type: Sequelize.DATE
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,18 +1,8 @@
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 
 const adminAuth = (req, res, next) => {
     try{
-        const token = req.header('Authorization').replace('Bearer ','')
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = decoded
-        res.locals.user = decoded
-        if(user.type !== 'admin'){
-            throw {message : 'Unauthorized', status : 401}
-        }
-        // if(new Date(user.token_expire) < new Date()){
-        //     throw {message : 'token expire', status : 400}
-        // }
+        if(!req.session.user) throw {message : 'Unauthorized', status : 401}
+        if(req.session.user.type!=='admin') throw {message : 'Unauthorized', status : 401}
         next()
     }catch(e){  
         res.status(e.status ? e.status : 500).send(e)
@@ -20,13 +10,7 @@ const adminAuth = (req, res, next) => {
 }
 const clientAuth = (req, res, next) => {
     try{
-        const token = req.header('Authorization').replace('Bearer ','')
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = decoded
-        res.locals.user = user
-        if(new Date(user.token_expire) < new Date()){
-            throw {message : 'token expire', status : 400}
-        }
+        if(!req.session.user) throw {message : 'Unauthorized', status : 401}
         next()
     }catch(e){  
         res.status(e.status ? e.status : 500).send(e)

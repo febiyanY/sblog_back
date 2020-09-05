@@ -10,8 +10,9 @@ router.get('/', adminAuth, c_users.getUsers)
 router.post('/', c_users.addUser)
 router.patch('/', clientAuth, c_users.updateUser)
 router.delete('/:id', adminAuth, c_users.deleteUser)
-router.get('/:id', clientAuth, c_users.getOneUser)
+router.get('/checksession', clientAuth, c_users.checkSession)
 router.post('/uploadava', clientAuth, upload, c_users.changeAva)
 
-// export default router
+router.get('/:id', clientAuth, c_users.getOneUser)
+
 module.exports = router

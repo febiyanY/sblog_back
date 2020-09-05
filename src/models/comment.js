@@ -21,6 +21,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'quoted',
         as : 'reply'
       })
+      Comment.belongsToMany(models.User, {
+        foreignKey : 'commentId',
+        as : 'CommentUpvotes',
+        through : models.CommentUpvote
+      })
+      Comment.belongsToMany(models.User, {
+        foreignKey : 'commentId',
+        as : 'CommentDownvotes',
+        through : models.CommentDownvote
+      })
     }
   };
   Comment.init({
@@ -28,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
     time: {
       type : DataTypes.DATE,
       defaultValue: DataTypes.NOW
+    },
+    votes : {
+      type : DataTypes.INTEGER,
+      defaultValue : 0
     }
   }, {
     sequelize,

@@ -1,7 +1,5 @@
-// import {User as mUser, Post as mPost} from '../models/index'
 const {User : mUser, Post : mPost} = require('../models/index')
 const bcrypt = require('bcrypt') 
-const jwt = require('jsonwebtoken') 
 const fs = require('fs') 
 const util = require('util') 
 const path = require('path') 
@@ -14,12 +12,10 @@ class Users {
             if(!user) throw {message : 'Username or Password incorrect', status : 400}
             const match = await bcrypt.compare(req.body.password, user.password)
             if(!match) throw {message : 'Username or Password incorrect', status : 400}
-            user.token_expire = new Date(new Date().getTime() + (3600 * 1000))
-            user.save()
-            let data = {...user}
-            const token = jwt.sign(data.dataValues, process.env.JWT_SECRET, {expiresIn : '1h'})
-            // res.send({message : 'success', data : {...user, token}})
-            res.send({data : data.dataValues, token})
+            let data = {...user.dataValues}
+            delete data.password
+            req.session.user = data
+            res.send(data)
         }catch(e){
             res.status(e.status ? e.status :500).send(e)
         }
@@ -27,15 +23,15 @@ class Users {
 
     async logout(req,res){
         try{
-            const token = req.header('Authorization').replace('Bearer ','')
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            const user = decoded.dataValues
-            const token_expire = new Date(new Date().getTime() - (3600 * 1000))
-            await mUser.update({token_expire}, {where : {id : user.id}})
-            res.send({message : 'success'})
+            await req.session.destroy()
+            res.send({message : 'logged out'})
         }catch(e){
             res.status(500).send(e)
         }
+    }
+
+    async checkSession(req,res){
+        res.send(req.session.user)
     }
 
     async getUsers(req,res){
@@ -116,5 +112,4 @@ class Users {
 
 }
 
-// export default new Users()
 module.exports =  new Users()

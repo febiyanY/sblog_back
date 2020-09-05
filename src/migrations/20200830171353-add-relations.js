@@ -29,7 +29,7 @@ module.exports = {
           key : 'id'
         },
         onUpdate : 'CASCADE',
-        onDelete : 'SET NULL',
+        onDelete : 'CASCADE',
         allowNull : false
     })
     await queryInterface.addColumn('Comments', 'postId', {

@@ -18,6 +18,26 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Comment, {
         foreignKey: 'userId'
       })
+      User.belongsToMany(models.Post, {
+        foreignKey : 'userId',
+        as : 'PostUpvotes',
+        through : models.PostUpvote
+      })
+      User.belongsToMany(models.Post, {
+        foreignKey : 'userId',
+        as : 'PostDownvotes',
+        through : models.PostDownvote
+      })
+      User.belongsToMany(models.Comment, {
+        foreignKey : 'userId',
+        as : 'CommentUpvotes',
+        through : models.CommentUpvote
+      })
+      User.belongsToMany(models.Comment, {
+        foreignKey : 'userId',
+        as : 'CommentDownvotes',
+        through : models.CommentDownvote
+      })
     }
   };
   User.init({
@@ -28,9 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type : DataTypes.STRING,
       defaultValue : 'client'
-    },
-    token: DataTypes.STRING,
-    token_expire: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'User',

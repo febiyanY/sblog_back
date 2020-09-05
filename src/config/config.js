@@ -5,7 +5,10 @@ module.exports = {
         database: "stupid_blog_2",
         host: "127.0.0.1",
         dialect: "postgres",
-        logging : false
+        logging : false,
+        // define : {
+        //     timestamps: false
+        // },
     },
     test: {
         username: "postgres",

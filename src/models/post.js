@@ -14,6 +14,17 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.User, {
         foreignKey : 'userId'
       })
+
+      Post.belongsToMany(models.User, {
+        foreignKey : 'postId',
+        as : 'PostUpvotes',
+        through : models.PostUpvote
+      })
+      Post.belongsToMany(models.User, {
+        foreignKey : 'postId',
+        as : 'PostDownvotes',
+        through : models.PostDownvote
+      })
     }
   };
   Post.init({
@@ -23,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     time: {
      type : DataTypes.DATE,
      defaultValue: DataTypes.NOW
+    },
+    votes : {
+      type : DataTypes.INTEGER,
+      defaultValue : 0
     }
   }, {
     sequelize,

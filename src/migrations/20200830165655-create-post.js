@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       },
+      votes : {
+        type : Sequelize.INTEGER,
+        defaultValue : 0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

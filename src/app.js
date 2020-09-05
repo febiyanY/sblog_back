@@ -1,7 +1,16 @@
 const express = require('express') 
 const http = require('http') 
 const cors = require('cors') 
-const path = require('path') 
+const path = require('path')
+const {sequelize : db} = require('./models/index') 
+const session = require('express-session')
+const connect_session_sequelize = require('connect-session-sequelize')
+
+const SequelizeStore = connect_session_sequelize(session.Store)
+
+var SessionStore = new SequelizeStore({
+    db : db
+})
 
 const r_users = require('./routes/users') 
 const r_posts = require('./routes/posts') 
@@ -12,16 +21,27 @@ const c_users = require('./controllers/users')
 const app = express()
 const server = http.createServer(app)
 const publicPath = path.join(__dirname, '../public')
-// const corsOptions = {
-//     origin: 'http://127.0.0.1:3000',
-//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// }
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN,
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
+    credentials : true
+}
 
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static(publicPath))
-app.use(cors())
+app.use(cors(corsOptions))
+app.use(session({
+    secret : process.env.SESS_SECRET,
+    resave : false,
+    saveUninitialized : false,
+    cookie : {
+        maxAge : 1000 * 60 * 60 * 24 * 2
+    },
+    store : SessionStore
+}))
+SessionStore.sync()
 
 app.use('/users', r_users)
 app.use('/posts', r_posts)
