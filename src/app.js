@@ -39,6 +39,7 @@ const sessConfig = {
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     sessConfig.cookie.secure = true // serve secure cookies
+    sessConfig.cookie.sameSite = "none" // enable 3rd party cookies for chrome
 }
 
 
